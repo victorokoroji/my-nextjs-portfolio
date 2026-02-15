@@ -131,6 +131,24 @@ export const projects = [
     githubUrl: "https://github.com/workshopapps/dinnerwithfriends.web",
     featured: false,
   },
+  {
+    id: 7,
+    title: "Echez - Automated Bootcamp Platform",
+    year: "2024-2025",
+    company: "Echez",
+    description: "Automated bootcamp platform with cohort management, multi-track enrollment, assignments, and grading workflows.",
+    tags: ["Next.js 16", "Redux Toolkit", "TypeScript", "JWT", "SSR"],
+    image: "/projects/echez.jpg",
+    category: ["SaaS", "Featured"],
+    metrics: [
+      "15+ hours/week saved",
+      "35% faster development",
+      "<3s load times"
+    ],
+    liveUrl: "https://echez.vercel.app/",
+    githubUrl: null,
+    featured: true,
+  },
 ];
 
 export const caseStudies = [

@@ -1,0 +1,17 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function copyToClipboard(text: string) {
+  return navigator.clipboard.writeText(text);
+}
+
+export function formatNumber(num: number): string {
+  if (num >= 1000) {
+    return `${(num / 1000).toFixed(0)}K+`;
+  }
+  return num.toString();
+}

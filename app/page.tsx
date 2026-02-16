@@ -696,6 +696,8 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="sm"
+                type="button"
+                className="cursor-pointer"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 icon={<HiOutlineArrowUp />}
               >

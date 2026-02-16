@@ -28,7 +28,7 @@ export const metadata: Metadata = {
           "@type": "Person",
           "name": "Victor Ebube Okoroji",
           "jobTitle": "Frontend Engineer",
-          "description": "Building scalable, high-performance web applications for enterprise and SaaS clients.",
+          "description": "Frontend Engineer with 4+ years building scalable SaaS and enterprise applications. Specialized in React, Next.js, TypeScript.",
           "url": "https://victorokoroji.vercel.app",
           "sameAs": [
             "https://www.linkedin.com/in/victor-ebube-okoroji-9b1a4b1b3/",
@@ -41,11 +41,11 @@ export const metadata: Metadata = {
           'keywords': 'Frontend Engineer, React, Next.js, TypeScript, SaaS, Enterprise Applications',
           image: {
         '@type': 'ImageObject',
-        url: 'https://victorokoroji.vercel.app/profile-picture.jpg',
+        url: '/profile-picture.jpg',
         width: '528',
         height: '350',
       },
-      screenshot: 'https://victorokoroji.vercel.app/profile-picture.jpg',
+      screenshot: '/profile-picture.jpg',
       author: {
         '@type': 'Person',
         name: 'Victor Ebube Okoroji',
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Victor Okoroji - Frontend Engineer",
     description:
-      "Building scalable, high-performance web applications for enterprise and SaaS clients.",
+      "Frontend Engineer with 4+ years building scalable SaaS and enterprise applications. Specialized in React, Next.js, TypeScript.",
     url: "https://victorokoroji.vercel.app",
     siteName: "Victor Okoroji Portfolio",
     locale: "en_US",

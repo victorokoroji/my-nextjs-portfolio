@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { useMutation } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import {
   blogPosts,
@@ -219,7 +220,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
   return (
     <div
       ref={ref}
-      className="rounded-2xl border border-white/10 bg-white/70 dark:bg-gray-900/60 backdrop-blur-md px-6 py-5 text-center"
+      className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white/70 dark:bg-gray-900/60 backdrop-blur-md px-6 py-5 text-center"
     >
       <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
         {count}
@@ -595,8 +596,7 @@ export default function Home() {
           <SectionHeading subtitle="Crafting performant, accessible, and scalable frontend systems.">
             About Me
           </SectionHeading>
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-            <div className="space-y-4 text-gray-600 dark:text-gray-300">
+          <div className="space-y-4 text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
               <p>
                 Frontend Engineer with 4+ years building production applications for enterprise and SaaS clients.
                 I specialize in React, Next.js, and TypeScript to create fast, scalable web experiences. My work has
@@ -638,16 +638,6 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-            <div className="relative">
-              <div className="h-80 w-full rounded-3xl border border-white/10 bg-gradient-to-br from-purple-600/20 to-blue-500/10 p-4">
-                <div className="h-full w-full rounded-2xl bg-gradient-to-br from-gray-900/10 to-gray-900/30" />
-              </div>
-              <div className="absolute -bottom-6 -left-6 rounded-2xl bg-white dark:bg-gray-900 px-5 py-4 shadow-lg">
-                <div className="text-xs text-gray-500">Location</div>
-                <div className="font-semibold text-gray-900 dark:text-white">{personalInfo.location}</div>
-              </div>
-            </div>
-          </div>
         </Section>
 
         <Section id="contact">
@@ -842,7 +832,6 @@ export default function Home() {
 }
 
 function ContactSection() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -851,6 +840,26 @@ function ContactSection() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const characterCount = formData.message.length;
+
+  const mutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Failed to send message");
+      return response.json();
+    },
+    onSuccess: () => {
+      setFormData({ name: "", email: "", subject: "Freelance", message: "" });
+      setErrors({});
+      setTimeout(() => mutation.reset(), 3000);
+    },
+    onError: () => {
+      setTimeout(() => mutation.reset(), 3000);
+    },
+  });
 
   const validate = () => {
     const nextErrors: Record<string, string> = {};
@@ -864,22 +873,7 @@ function ContactSection() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!validate()) return;
-    setStatus("loading");
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) throw new Error("Failed");
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "Freelance", message: "" });
-      setErrors({});
-    } catch (error) {
-      setStatus("error");
-    } finally {
-      setTimeout(() => setStatus("idle"), 3000);
-    }
+    mutation.mutate(formData);
   };
 
   return (
@@ -928,16 +922,16 @@ function ContactSection() {
               className="mt-2 w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3 text-sm min-h-[140px]"
               placeholder="Tell me about your project"
             />
-            <div className="mt-1 flex items-center justify-between text-xs text-gray-500">
-              <span>{errors.message ? errors.message : " "}</span>
-              <span>{characterCount}/500</span>
+            <div className="mt-1 flex items-center justify-between text-xs">
+              <span className={errors.message ? "text-red-500" : "text-gray-500"}>{errors.message ? errors.message : " "}</span>
+              <span className="text-gray-500">{characterCount}/500</span>
             </div>
           </div>
-          <Button type="submit" className="cursor-pointer" disabled={status === "loading"}>
-            {status === "loading" ? "Sending..." : "Send Message"}
+          <Button type="submit" className="cursor-pointer" disabled={mutation.isPending}>
+            {mutation.isPending ? "Sending..." : "Send Message"}
           </Button>
           <AnimatePresence>
-            {status === "success" && (
+            {mutation.isSuccess && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -947,7 +941,7 @@ function ContactSection() {
                 Message sent successfully.
               </motion.div>
             )}
-            {status === "error" && (
+            {mutation.isError && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

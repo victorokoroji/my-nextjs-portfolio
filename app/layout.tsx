@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,25 +18,72 @@ export const metadata: Metadata = {
   title: "Victor Okoroji - Frontend Engineer | React, Next.js, TypeScript",
   description:
     "Frontend Engineer with 4+ years building scalable SaaS and enterprise applications. Specialized in React, Next.js, TypeScript.",
-  metadataBase: new URL("https://victorokoroji.dev"),
+  metadataBase: new URL("https://victorokoroji.vercel.app"),
   alternates: {
     canonical: "/",
+  },
+  other: {
+        'application/ld+json': JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Victor Ebube Okoroji",
+          "jobTitle": "Frontend Engineer",
+          "description": "Building scalable, high-performance web applications for enterprise and SaaS clients.",
+          "url": "https://victorokoroji.vercel.app",
+          "sameAs": [
+            "https://www.linkedin.com/in/victor-ebube-okoroji-9b1a4b1b3/",
+            "https://github.com/victorokoroji",
+            "https://twitter.com/victorokoroji",
+            "https://www.instagram.com/victorokoroji/",
+            "https://www.facebook.com/victor.okoroji.589"
+          ],
+          'applicationCategory': 'Web Application',
+          'keywords': 'Frontend Engineer, React, Next.js, TypeScript, SaaS, Enterprise Applications',
+          image: {
+        '@type': 'ImageObject',
+        url: 'https://victorokoroji.vercel.app/profile-picture.jpg',
+        width: '528',
+        height: '350',
+      },
+      screenshot: 'https://victorokoroji.vercel.app/profile-picture.jpg',
+      author: {
+        '@type': 'Person',
+        name: 'Victor Ebube Okoroji',
+      },
+        })
+
   },
   openGraph: {
     title: "Victor Okoroji - Frontend Engineer",
     description:
       "Building scalable, high-performance web applications for enterprise and SaaS clients.",
-    url: "https://victorokoroji.dev",
+    url: "https://victorokoroji.vercel.app",
     siteName: "Victor Okoroji Portfolio",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: 'https://victorokoroji.vercel.app/profile-picture.jpg',
+        width: 528,
+        height: 350,
+        alt: 'Welcome to Victor Okoroji Portfolio',
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Victor Okoroji - Frontend Engineer",
     description:
       "Frontend Engineer with 4+ years building scalable SaaS and enterprise applications.",
-  },
+  images: [
+      {
+        url: 'https://victorokoroji.vercel.app/profile-picture.jpg',
+        width: 528,
+        height: 350,
+        alt: 'Welcome to Victor Okoroji Portfolio',
+      },
+    ],
+    },
   robots: {
     index: true,
     follow: true,
@@ -55,9 +103,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

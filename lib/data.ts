@@ -283,8 +283,8 @@ export const testimonials = [
   {
     id: 3,
     quote: "Victor's contributions to Tixtango were invaluable. He played a key role in building our ticketing platform and ensuring its success.",
-    name: "CEO and Co-founder of Tixtango",
-    role: "CTO at Tixtango",
+    name: "Jokotoye Ademola",
+    role: "CEO / Co-Founder at Tixtango",
     company: "Tixtango",
     avatar: "/testimonials/avatar3.jpg"
   }

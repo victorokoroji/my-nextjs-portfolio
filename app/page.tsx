@@ -653,7 +653,7 @@ export default function Home() {
           <div>
             <h3 className="text-xl font-semibold">Victor Okoroji</h3>
             <p className="text-sm text-gray-400 mt-2">
-              Building scalable, high-performance web applications for enterprise and SaaS clients.
+              Building scalable, high-performance web applications for enterprise and SaaS businesses.
             </p>
             <div className="flex gap-3 mt-4">
               <Link href={personalInfo.github} target="_blank" rel="noreferrer">

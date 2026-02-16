@@ -63,10 +63,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: 'https://victorokoroji.vercel.app/profile-picture.jpg',
-        width: 528,
-        height: 350,
-        alt: 'Welcome to Victor Okoroji Portfolio',
+        url: '/profile-picture.jpg',
+        width: 800,
+        height: 800,
+        alt: 'Victor Okoroji - Frontend Engineer',
       },
     ],
   },
@@ -77,10 +77,10 @@ export const metadata: Metadata = {
       "Frontend Engineer with 4+ years building scalable SaaS and enterprise applications.",
   images: [
       {
-        url: 'https://victorokoroji.vercel.app/profile-picture.jpg',
-        width: 528,
-        height: 350,
-        alt: 'Welcome to Victor Okoroji Portfolio',
+        url: '/profile-picture.jpg',
+        width: 800,
+        height: 800,
+        alt: 'Victor Okoroji - Frontend Engineer',
       },
     ],
     },
